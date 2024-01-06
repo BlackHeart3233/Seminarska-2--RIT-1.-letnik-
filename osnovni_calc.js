@@ -17,3 +17,8 @@ function DodamVDisplay(vnos){
 function Izbrisi(){
     document.getElementById("vnos").value = "";
 }
+
+function IzbrisiEno(){
+     let vnos = document.getElementById("vnos").value;
+     document.getElementById("vnos").value = vnos.slice(0, -1);
+}

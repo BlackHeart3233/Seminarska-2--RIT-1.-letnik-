@@ -22,27 +22,35 @@
     <div id="calc" class="mx-auto" >
         <input readonly id="vnos"></input>
         <div id="gumbi"class="mx-auto">
-            <div class="calc_fun" onclick='DodamVDisplay(" pow(")'>pow</div>
-            <div class="calc_fun" onclick='DodamVDisplay(" % ")'>%</div>
-            <div class="calc_fun" onclick='DodamVDisplay(" sqrt(")'>sqrt</div>
+            <div class="calc_fun" onclick='DodamVDisplay(" ( ")'>(</div>
+            <div class="calc_fun" onclick='DodamVDisplay(" ) ")'>)</div>
+            <div class="calc_fun" onclick='IzbrisiEno()'><-</div>
             <div class="calc_fun" onclick='Izbrisi()'>C</div>
+
+            <div class="calc_fun" onclick='DodamVDisplay(" % ")'>%</div>
+            <div class="calc_fun" onclick='DodamVDisplay(" pow(")'>pow</div>
+            <div class="calc_fun" onclick='DodamVDisplay(" sqrt(")'>sqrt</div>
+            <div class="calc_fun" onclick='DodamVDisplay(" / ")'>/</div>
+
             <div class="calc_st"onclick='DodamVDisplay("1")'>1</div>
             <div class="calc_st"onclick='DodamVDisplay("2")'>2</div>
             <div class="calc_st"onclick='DodamVDisplay("3")'>3</div>
-            <div class="calc_fun" onclick='DodamVDisplay(" + ")'>+</div>
+            <div class="calc_fun" onclick='DodamVDisplay(" * ")'>*</div>  
+
             <div class="calc_st"onclick='DodamVDisplay("4")'>4</div>
             <div class="calc_st"onclick='DodamVDisplay("5")'>5</div>
             <div class="calc_st" onclick='DodamVDisplay("6")'>6</div>
             <div class="calc_fun" onclick='DodamVDisplay(" - ")'>-</div>
+
             <div class="calc_st"onclick='DodamVDisplay("7")'>7</div>
             <div class="calc_st"onclick='DodamVDisplay("8")'>8</div>
             <div class="calc_st"onclick='DodamVDisplay("9")'>9</div>
-            <div class="calc_fun" onclick='Izracunaj()'>=</div>
-            <div class="calc_st"onclick='DodamVDisplay("0")'>0</div>
-            <div class="calc_fun" onclick='DodamVDisplay(" ( ")'>(</div>
-            <div class="calc_fun" onclick='DodamVDisplay(" ) ")'>)</div>
-            <div class="calc_fun" onclick='DodamVDisplay(".")'>.</div>
+            <div class="calc_fun" onclick='DodamVDisplay(" + ")'>+</div>
+            
             <div class="calc_fun" onclick='DodamVDisplay(", ")'>,</div>
+            <div class="calc_st"onclick='DodamVDisplay("0")'>0</div>
+            <div class="calc_fun" onclick='DodamVDisplay(".")'>.</div>
+            <div class="calc_fun" onclick='Izracunaj()'>=</div>
         </div>
 
     </div>
