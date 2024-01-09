@@ -23,16 +23,12 @@ function IzbrisiEno(){
 }
 
 //PRETVORBA MED ŠTEVILSKIMI SISTEMI
-function decToBin(stevilo){
+function decConversion(stevilo, sistem){ // sistem je število 2, 8 ali 16
     let result = "";
+    let vrednosti = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
     while(stevilo > 0){
-        if(stevilo % 2 == 1){
-            result = "1" + result;
-        }
-        else if(stevilo % 2 == 0){
-            result = "0" + result;
-        }
-        stevilo = Math.floor(stevilo/2);
+        result = vrednosti[(stevilo % sistem)] + result;
+        stevilo = Math.floor(stevilo/sistem);
     }
     return result;
 }
