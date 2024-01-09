@@ -88,6 +88,7 @@ function binToHex(stevilo){
 
     return result;
 }
+//Manjka binToDec, octToDec, hexToDec, octToBin, hexToBin
 
 //LOGICNI OPERATORJI
 
