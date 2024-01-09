@@ -17,6 +17,50 @@ function Izbrisi(){
     document.getElementById("vnos").value = "";
 }
 
+//PRETVORBA MED ŠTEVILSKIMI SISTEMI
+function decToBin(stevilo){
+    let result = "";
+    while(stevilo > 0){
+        if(stevilo % 2 == 1){
+            result = "1" + result;
+        }
+        else if(stevilo % 2 == 0){
+            result = "0" + result;
+        }
+        stevilo = Math.floor(stevilo/2);
+    }
+    return result;
+}
+
+function binToOct(stevilo){
+    let trijeBiti = ["000", "001", "010", "011", "100", "101", "110", "111"];
+    stevilo = stevilo.toString();
+    if(stevilo.length % 3 == 1){
+        stevilo = "00" + stevilo;
+        console.log("a");
+    }
+    else if(stevilo.length % 3 == 2){
+        stevilo = "0" + stevilo;
+        console.log("b");
+        console.log(stevilo);
+    }
+
+    let dolz = stevilo.length
+    let i = 0
+    let result = "";
+    while(i <= dolz){
+        let tmp = stevilo.substring(i, i+3);
+        for(let j = 0; j < 8; j++){
+            if(tmp == trijeBiti[j]){
+                result += j;
+            }
+        }
+        i += 3;
+    }
+
+    return result;
+}
+
 function IzbrisiEno(){
      let vnos = document.getElementById("vnos").value;
      document.getElementById("vnos").value = vnos.slice(0, -1);
