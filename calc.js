@@ -1,4 +1,4 @@
-//Osnovni
+//OSNOVNI
 function Izracunaj() {
     let racun = document.getElementById("vnos").value;
 
@@ -15,6 +15,11 @@ function DodamVDisplay(vnos){
 
 function Izbrisi(){
     document.getElementById("vnos").value = "";
+}
+
+function IzbrisiEno(){
+    let vnos = document.getElementById("vnos").value;
+    document.getElementById("vnos").value = vnos.slice(0, -1);
 }
 
 //PRETVORBA MED ŠTEVILSKIMI SISTEMI
@@ -37,18 +42,15 @@ function binToOct(stevilo){
     stevilo = stevilo.toString();
     if(stevilo.length % 3 == 1){
         stevilo = "00" + stevilo;
-        console.log("a");
     }
     else if(stevilo.length % 3 == 2){
         stevilo = "0" + stevilo;
-        console.log("b");
-        console.log(stevilo);
     }
 
     let dolz = stevilo.length
     let i = 0
     let result = "";
-    while(i <= dolz){
+    while(i < dolz){
         let tmp = stevilo.substring(i, i+3);
         for(let j = 0; j < 8; j++){
             if(tmp == trijeBiti[j]){
@@ -61,9 +63,34 @@ function binToOct(stevilo){
     return result;
 }
 
-function IzbrisiEno(){
-     let vnos = document.getElementById("vnos").value;
-     document.getElementById("vnos").value = vnos.slice(0, -1);
+function binToHex(stevilo){
+    let strijeBiti = ["0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111", "1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111"];
+    let vrednosti = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
+    stevilo = stevilo.toString();
+    if(stevilo.length % 4 == 1){
+        stevilo = "000" + stevilo;
+    }
+    else if(stevilo.length % 4 == 2){
+        stevilo = "00" + stevilo;
+    }
+    else if(stevilo.length % 4 == 3){
+        stevilo = "0" + stevilo;
+    }
+
+    let dolz = stevilo.length
+    let i = 0
+    let result = "";
+    while(i < dolz){
+        let tmp = stevilo.substring(i, i+4);
+        for(let j = 0; j < 16; j++){
+            if(tmp == strijeBiti[j]){
+                result += vrednosti[j];
+            }
+        }
+        i += 4;
+    }
+
+    return result;
 }
 
 //LOGICNI OPERATORJI
