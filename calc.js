@@ -26,10 +26,29 @@ function IzbrisiEno(){
 let numSistem = ["0b", "0o", "", "0x"];
 let numSistem2 = [2, 8, 10, 16];
 let trenutniSistem = 1; 
+let vrednosti = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
+let trijeBiti = ["000", "001", "010", "011", "100", "101", "110", "111"];
+let strijeBiti = ["0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111", "1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111"];
+
+//DEC button
+function toDecConversion(){ 
+    if(numSistem2[trenutniSistem] == 10){
+        return;
+    }
+    
+    let stevilo = document.getElementById("vnos").value;
+    let dolz = stevilo.length;
+    let result = 0;
+    for(let i = 0; i < dolz; i++){
+        result += (vrednosti.indexOf(stevilo[i])) * Math.pow(numSistem2[trenutniSistem], dolz-i-1);//numSistem2[trenutniSistem] je stevilo 2, 8, 16
+    }
+    document.getElementById("vnos").value = result;
+    trenutniSistem = 2;
+}
 
 function decConversion(stevilo, sistem){ // sistem je število 2, 8 ali 16
     let result = "";
-    let vrednosti = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
+    
     while(stevilo > 0){
         result = vrednosti[(stevilo % sistem)] + result;
         stevilo = Math.floor(stevilo/sistem);
@@ -38,8 +57,6 @@ function decConversion(stevilo, sistem){ // sistem je število 2, 8 ali 16
 }
 
 function binToOct(stevilo){
-    let trijeBiti = ["000", "001", "010", "011", "100", "101", "110", "111"];
-    stevilo = stevilo.toString();
     if(stevilo.length % 3 == 1){
         stevilo = "00" + stevilo;
     }
@@ -64,8 +81,6 @@ function binToOct(stevilo){
 }
 
 function binToHex(stevilo){
-    let strijeBiti = ["0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111", "1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111"];
-    let vrednosti = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
     if(stevilo.length % 4 == 1){
         stevilo = "000" + stevilo;
     }
@@ -92,23 +107,21 @@ function binToHex(stevilo){
     return result;
 }
 
-function toDecConversion(){ 
-    if(numSistem2[trenutniSistem] == 10){
-        return;
+function octToBin(stevilo){
+    let result = "";
+    for(let i = 0; i < stevilo.length; i++){
+        result += trijeBiti[stevilo[i]];
     }
-    
-    let stevilo = document.getElementById("vnos").value;
-    let dolz = stevilo.length;
-    let vrednosti = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
-    let result = 0;
-    for(let i = 0; i < dolz; i++){
-        result += (vrednosti.indexOf(stevilo[i])) * Math.pow(numSistem2[trenutniSistem], dolz-i-1);//numSistem2[trenutniSistem] je stevilo 2, 8, 16
-    }
-    document.getElementById("vnos").value = result;
-    trenutniSistem = 2;
+    return result;
 }
 
-//Manjka octToBin, hexToBin
+function hexToBin(stevilo){
+    let result = "";
+    for(let i = 0; i < stevilo.length; i++){
+        result += strijeBiti[vrednosti.indexOf(stevilo[i])];
+    }
+    return result;
+}
 
 //LOGICNI OPERATORJI
 
