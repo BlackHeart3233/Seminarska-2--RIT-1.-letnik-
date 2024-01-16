@@ -28,7 +28,7 @@ let numSistem2 = [2, 8, 10, 16];
 let trenutniSistem = 1; 
 let vrednosti = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
 let trijeBiti = ["000", "001", "010", "011", "100", "101", "110", "111"];
-let strijeBiti = ["0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111", "1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111"];
+let stirjeBiti = ["0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111", "1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111"];
 
 //DEC button
 function toDecConversion(){ 
@@ -44,6 +44,41 @@ function toDecConversion(){
     }
     document.getElementById("vnos").value = result;
     trenutniSistem = 2;
+}
+
+//BIN button
+function toBinConversion(){
+    if(numSistem2[trenutniSistem] == 2){
+        return;
+    }
+
+    let stevilo = document.getElementById("vnos").value;
+    if(numSistem2[trenutniSistem] == 8){
+        document.getElementById("vnos").value = octToBin(stevilo);
+    }
+    else if(numSistem2[trenutniSistem] == 10){
+        document.getElementById("vnos").value = decConversion(stevilo, 2);
+    }
+    else if(numSistem2[trenutniSistem] == 16){
+        document.getElementById("vnos").value = hexToBin(stevilo);
+    }
+    trenutniSistem = 0;
+}
+
+function octToBin(stevilo){
+    let result = "";
+    for(let i = 0; i < stevilo.length; i++){
+        result += trijeBiti[stevilo[i]];
+    }
+    return result;
+}
+
+function hexToBin(stevilo){
+    let result = "";
+    for(let i = 0; i < stevilo.length; i++){
+        result += stirjeBiti[vrednosti.indexOf(stevilo[i])];
+    }
+    return result;
 }
 
 function decConversion(stevilo, sistem){ // sistem je število 2, 8 ali 16
@@ -80,6 +115,8 @@ function binToOct(stevilo){
     return result;
 }
 
+
+
 function binToHex(stevilo){
     if(stevilo.length % 4 == 1){
         stevilo = "000" + stevilo;
@@ -97,7 +134,7 @@ function binToHex(stevilo){
     while(i < dolz){
         let tmp = stevilo.substring(i, i+4);
         for(let j = 0; j < 16; j++){
-            if(tmp == strijeBiti[j]){
+            if(tmp == stirjeBiti[j]){
                 result += vrednosti[j];
             }
         }
@@ -107,21 +144,7 @@ function binToHex(stevilo){
     return result;
 }
 
-function octToBin(stevilo){
-    let result = "";
-    for(let i = 0; i < stevilo.length; i++){
-        result += trijeBiti[stevilo[i]];
-    }
-    return result;
-}
 
-function hexToBin(stevilo){
-    let result = "";
-    for(let i = 0; i < stevilo.length; i++){
-        result += strijeBiti[vrednosti.indexOf(stevilo[i])];
-    }
-    return result;
-}
 
 //LOGICNI OPERATORJI
 
