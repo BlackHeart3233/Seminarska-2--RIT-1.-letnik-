@@ -1,15 +1,28 @@
 #vnosi_pretvorb {
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    align-content: center;
     height: 100px;
-    border: solid 1px black;
+    margin-top: 2%;
+    row-gap: 20px;
+
 }
 
+#vnos1{
+    grid-column: 2 / span 3;
+    width: 100%;
+}
+#dopdown1{
+    width: 80%;
+    padding-left:20% ;
+}
 
-
-#dopdown1,
-#dopdown2 {
-    margin-left: 10px;
-
+#dopdown2{
+    width: 80%;
+    padding-left:20% ;
+}
+#submit_form{
+    width: 80%;
+    grid-column: 5 / span 1;
 }
 
