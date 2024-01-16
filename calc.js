@@ -62,7 +62,6 @@ function binToOct(stevilo){
 function binToHex(stevilo){
     let strijeBiti = ["0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111", "1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111"];
     let vrednosti = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
-    stevilo = stevilo.toString();
     if(stevilo.length % 4 == 1){
         stevilo = "000" + stevilo;
     }
@@ -88,7 +87,19 @@ function binToHex(stevilo){
 
     return result;
 }
-//Manjka binToDec, octToDec, hexToDec, octToBin, hexToBin
+
+function toDecConversion(stevilo, sistem){ //sistem je stevilo 2, 8, 16
+    let dolz = stevilo.length;
+    let vrednosti = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
+    let result = 0;
+    for(let i = 0; i < dolz; i++){
+        result += (vrednosti.indexOf(stevilo[i])) * Math.pow(sistem, dolz-i-1);
+    }
+    return result;
+}
+console.log(toDecConversion("100111", 2));
+
+//Manjka octToBin, hexToBin
 
 //LOGICNI OPERATORJI
 
