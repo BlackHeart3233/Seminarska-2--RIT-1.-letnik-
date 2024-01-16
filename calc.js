@@ -10,7 +10,6 @@ function Izracunaj() {
   
 function DodamVDisplay(vnos){
     document.getElementById("vnos").value += vnos;
-
 }
 
 function Izbrisi(){
@@ -23,9 +22,69 @@ function IzbrisiEno(){
 }
 
 //PRETVORBA MED ŠTEVILSKIMI SISTEMI
+//Za naret še, gumi za a,b,c,d,e,f
+//Onemogočanje vpisovanja števil, ki niso možna v tem sistemu
+let numSistem = ["0b", "0o", "", "0x"];
+let numSistem2 = [2, 8, 10, 16];
+let trenutniSistem = 2; 
+let vrednosti = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
+let trijeBiti = ["000", "001", "010", "011", "100", "101", "110", "111"];
+let stirjeBiti = ["0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111", "1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111"];
+
+//DEC button
+function toDecConversion(){ 
+    if(numSistem2[trenutniSistem] == 10){
+        return;
+    }
+    
+    let stevilo = document.getElementById("vnos").value;
+    let dolz = stevilo.length;
+    let result = 0;
+    for(let i = 0; i < dolz; i++){
+        result += (vrednosti.indexOf(stevilo[i])) * Math.pow(numSistem2[trenutniSistem], dolz-i-1);//numSistem2[trenutniSistem] je stevilo 2, 8, 16
+    }
+    document.getElementById("vnos").value = result;
+    trenutniSistem = 2;
+}
+
+//BIN button
+function toBinConversion(){
+    if(numSistem2[trenutniSistem] == 2){
+        return;
+    }
+
+    let stevilo = document.getElementById("vnos").value;
+    if(numSistem2[trenutniSistem] == 8){
+        document.getElementById("vnos").value = octToBin(stevilo);
+    }
+    else if(numSistem2[trenutniSistem] == 10){
+        document.getElementById("vnos").value = decConversion(stevilo, 2);
+    }
+    else if(numSistem2[trenutniSistem] == 16){
+        document.getElementById("vnos").value = hexToBin(stevilo);
+    }
+    trenutniSistem = 0;
+}
+
+function octToBin(stevilo){
+    let result = "";
+    for(let i = 0; i < stevilo.length; i++){
+        result += trijeBiti[stevilo[i]];
+    }
+    return result;
+}
+
+function hexToBin(stevilo){
+    let result = "";
+    for(let i = 0; i < stevilo.length; i++){
+        result += stirjeBiti[vrednosti.indexOf(stevilo[i])];
+    }
+    return result;
+}
+
 function decConversion(stevilo, sistem){ // sistem je število 2, 8 ali 16
     let result = "";
-    let vrednosti = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
+    
     while(stevilo > 0){
         result = vrednosti[(stevilo % sistem)] + result;
         stevilo = Math.floor(stevilo/sistem);
@@ -33,9 +92,26 @@ function decConversion(stevilo, sistem){ // sistem je število 2, 8 ali 16
     return result;
 }
 
+//OCT button
+function toOctConversion(){
+    if(numSistem2[trenutniSistem] == 8){
+        return;
+    }
+
+    let stevilo = document.getElementById("vnos").value;
+    if(numSistem2[trenutniSistem] == 2){
+        document.getElementById("vnos").value = binToOct(stevilo);
+    }
+    else if(numSistem2[trenutniSistem] == 10){
+        document.getElementById("vnos").value = decConversion(stevilo, 8);
+    }
+    else if(numSistem2[trenutniSistem] == 16){
+        return; //Ni bilo treba tega naret
+    }
+    trenutniSistem = 1;
+}
+
 function binToOct(stevilo){
-    let trijeBiti = ["000", "001", "010", "011", "100", "101", "110", "111"];
-    stevilo = stevilo.toString();
     if(stevilo.length % 3 == 1){
         stevilo = "00" + stevilo;
     }
@@ -59,10 +135,26 @@ function binToOct(stevilo){
     return result;
 }
 
+//HEX button
+function toHexConversion(){
+    if(numSistem2[trenutniSistem] == 16){
+        return;
+    }
+
+    let stevilo = document.getElementById("vnos").value;
+    if(numSistem2[trenutniSistem] == 2){
+        document.getElementById("vnos").value = binToHex(stevilo);
+    }
+    else if(numSistem2[trenutniSistem] == 8){
+        return; //Ni bilo treba tega naret
+    }
+    else if(numSistem2[trenutniSistem] == 10){
+        document.getElementById("vnos").value = decConversion(stevilo, 16);
+    }
+    trenutniSistem = 3;
+}
+
 function binToHex(stevilo){
-    let strijeBiti = ["0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111", "1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111"];
-    let vrednosti = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
-    stevilo = stevilo.toString();
     if(stevilo.length % 4 == 1){
         stevilo = "000" + stevilo;
     }
@@ -79,7 +171,7 @@ function binToHex(stevilo){
     while(i < dolz){
         let tmp = stevilo.substring(i, i+4);
         for(let j = 0; j < 16; j++){
-            if(tmp == strijeBiti[j]){
+            if(tmp == stirjeBiti[j]){
                 result += vrednosti[j];
             }
         }
@@ -88,73 +180,86 @@ function binToHex(stevilo){
 
     return result;
 }
-//Manjka binToDec, octToDec, hexToDec, octToBin, hexToBin
+
+
 
 //LOGICNI OPERATORJI
 
-let numSistem = ["0b", "0o", "", "0x"];
-let numSistem2 = [2, 8, 10, 16];
-let trenutniSistem = 3; //samo pri testiranju
-
 //Računanje posameznih operatorjev
+// function racBit(prvo, operator, drugo = 0){
+//     if(operator == "&"){
+//         let result = numSistem[trenutniSistem] + (prvo & drugo).toString(numSistem2[trenutniSistem]); //Zamenjaj z lastno funkcijo za pretvorbo
+//         return result;
+//     }
+//     else if(operator == "|"){
+//         let result = numSistem[trenutniSistem] + (prvo | drugo).toString(numSistem2[trenutniSistem]);
+//         return result;
+//     }
+//     else if(operator == "^"){
+//         let result = numSistem[trenutniSistem] + (prvo ^ drugo).toString(numSistem2[trenutniSistem]);
+//         return result;
+//     }
+//     else if(operator == "~"){
+//         len = prvo.length;
+//         if(trenutniSistem != 2)
+//             len -= 2;
+//         result = numSistem[trenutniSistem] + (~prvo >>> 0).toString(numSistem2[trenutniSistem]);
+//         result = numSistem[trenutniSistem] + result.substring((result.length) - len);
+//         return result;
+//     }
+// }
+
 function racBit(prvo, operator, drugo = 0){
+    let result = "";
     if(operator == "&"){
-        let result = numSistem[trenutniSistem] + (prvo & drugo).toString(numSistem2[trenutniSistem]); //Zamenjaj z lastno funkcijo za pretvorbo
+        result += (prvo & drugo); //Zamenjaj z lastno funkcijo za pretvorbo
         return result;
     }
     else if(operator == "|"){
-        let result = numSistem[trenutniSistem] + (prvo | drugo).toString(numSistem2[trenutniSistem]);
+        result += (prvo | drugo);
         return result;
     }
     else if(operator == "^"){
-        let result = numSistem[trenutniSistem] + (prvo ^ drugo).toString(numSistem2[trenutniSistem]);
+        result += (prvo ^ drugo);
         return result;
     }
-    else if(operator == "~"){
+    else if(operator == "~"){ //Popravi
         len = prvo.length;
-        if(trenutniSistem != 2)
+        if(trenutniSistem != 2){
             len -= 2;
-        result = numSistem[trenutniSistem] + (~prvo >>> 0).toString(numSistem2[trenutniSistem]);
+        } 
+        result = numSistem[trenutniSistem] + (~prvo >>> 0);
         result = numSistem[trenutniSistem] + result.substring((result.length) - len);
         return result;
     }
 }
 
-//Obravnava celotnih izrazov
-function vecRacBit(izraz){
-    izraz = izraz.split(" ");
-
-    for (i in izraz){
-        if(izraz[i][0] != "~" && izraz[i][0] != "&" && izraz[i][0] != "|" && izraz[i][0] != "^"){
-            izraz[i] = numSistem[trenutniSistem] + izraz[i];
-        }
-        if(izraz[i][0] == "~"){
-            num = numSistem[trenutniSistem] + izraz[i].substring(1);
-            izraz[i] = racBit(num, "~").toString(numSistem2[trenutniSistem]);
-        }
+//Ni še dokončano
+function izrazLogicna(){
+    let izraz = document.getElementById("vnos").value.split(" ");
+    let result;
+    if(izraz[0] == "~"){
+        izraz[0] = numSistem[trenutniSistem] + izraz[0];
+        result = racBit(izraz[1], izraz[0]);
     }
-
-    let operator = ["&", "|", "^"];
-    for(let j = 0; j < 3; j++){
-        for(let i = 0; i < izraz.length; i++){
-            if (izraz[i] == operator[j]){
-                let result = racBit(Number(izraz[i-1]), operator[j], Number(izraz[i+1]));
-                izraz.splice(i-1, 3, result);
-                i = 0;
-            }
-            if (izraz.length <= 1){
-                break;
-            }
-        }
+    else {
+        izraz[0] = numSistem[trenutniSistem] + izraz[0];
+        izraz[2] = numSistem[trenutniSistem] + izraz[2];
+        result = racBit(izraz[0], izraz[1], izraz[2]);
     }
-
-    let result = "";
-    for(let i = 0; i < izraz.length; i++){
-        result += izraz[i];
+    
+    let prejSistem = trenutniSistem;
+    document.getElementById("vnos").value = result;
+    trenutniSistem = 2;
+    if(prejSistem == 0){
+        toBinConversion();
     }
-    if(trenutniSistem != 2)
-        result = result.substring(2);
-    return result;
+    else if(prejSistem == 1){
+        toOctConversion();
+    }
+    else if(prejSistem == 3){
+        toHexConversion();
+    }
 }
 
 //Testiranje

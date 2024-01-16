@@ -4,44 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="pretvorbe.css">
+    <link rel="stylesheet" href="index.css">
     <script src="calc.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    
+    <script>
+        $(document).ready(function(){
+            $(".conversion").click(function(){
+                $(".conversion").removeClass("conversion-active");
+                $(this).addClass("conversion-active");
+            });
+        });
+        
+    </script>
 </head>
 <body>
+    
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="osnovni_kalkulator.html">Osnovni kalkulator</a>
         <a  class="navbar-brand" href="pretvorbe.html">Pretvorbeni kalkulator</a>
         <a  class="navbar-brand" href="">Dokumenti</a>       
     </nav>
-    <div id="vnosi_pretvorb">
-        <div class="dropdown"  id="dopdown1">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-            </button>
-            <ul class="dropdown-menu">
-            <li><button class="dropdown-item" type="button">DEC</button></li>
-            <li><button class="dropdown-item" type="button">BIN</button></li>
-            <li><button class="dropdown-item" type="button">OCT</button></li>
-            <li><button class="dropdown-item" type="button">HEX</button></li>
-            </ul>
-        </div>
-        <div class="input-group mb-3" id="vnos1">
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-        </div>
-        <div class="dropdown"id="dopdown2">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-            </button>
-            <ul class="dropdown-menu">
-            <li><button class="dropdown-item" type="button">DEC</button></li>
-            <li><button class="dropdown-item" type="button">BIN</button></li>
-            <li><button class="dropdown-item" type="button">OCT</button></li>
-            <li><button class="dropdown-item" type="button">HEX</button></li>
-            </ul>
-        </div>
-    </div>
 </body>
 </html>
