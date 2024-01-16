@@ -22,7 +22,8 @@ function IzbrisiEno(){
 }
 
 //PRETVORBA MED ŠTEVILSKIMI SISTEMI
-
+//Za naret še, gumi za a,b,c,d,e,f
+//Onemogočanje vpisovanja števil, ki niso možna v tem sistemu
 let numSistem = ["0b", "0o", "", "0x"];
 let numSistem2 = [2, 8, 10, 16];
 let trenutniSistem = 2; 
