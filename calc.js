@@ -10,7 +10,6 @@ function Izracunaj() {
   
 function DodamVDisplay(vnos){
     document.getElementById("vnos").value += vnos;
-
 }
 
 function Izbrisi(){
@@ -23,6 +22,11 @@ function IzbrisiEno(){
 }
 
 //PRETVORBA MED ŠTEVILSKIMI SISTEMI
+
+let numSistem = ["0b", "0o", "", "0x"];
+let numSistem2 = [2, 8, 10, 16];
+let trenutniSistem = 1; 
+
 function decConversion(stevilo, sistem){ // sistem je število 2, 8 ali 16
     let result = "";
     let vrednosti = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
@@ -88,24 +92,27 @@ function binToHex(stevilo){
     return result;
 }
 
-function toDecConversion(stevilo, sistem){ //sistem je stevilo 2, 8, 16
+function toDecConversion(){ 
+    if(numSistem2[trenutniSistem] == 10){
+        return;
+    }
+    
+    let stevilo = document.getElementById("vnos").value;
     let dolz = stevilo.length;
     let vrednosti = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"];
     let result = 0;
     for(let i = 0; i < dolz; i++){
-        result += (vrednosti.indexOf(stevilo[i])) * Math.pow(sistem, dolz-i-1);
+        result += (vrednosti.indexOf(stevilo[i])) * Math.pow(numSistem2[trenutniSistem], dolz-i-1);//numSistem2[trenutniSistem] je stevilo 2, 8, 16
     }
-    return result;
+    document.getElementById("vnos").value = result;
+    trenutniSistem = 2;
 }
-console.log(toDecConversion("100111", 2));
 
 //Manjka octToBin, hexToBin
 
 //LOGICNI OPERATORJI
 
-let numSistem = ["0b", "0o", "", "0x"];
-let numSistem2 = [2, 8, 10, 16];
-let trenutniSistem = 3; //samo pri testiranju
+
 
 //Računanje posameznih operatorjev
 function racBit(prvo, operator, drugo = 0){
