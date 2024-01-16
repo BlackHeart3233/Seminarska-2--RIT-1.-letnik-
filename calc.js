@@ -186,26 +186,79 @@ function binToHex(stevilo){
 //LOGICNI OPERATORJI
 
 //Računanje posameznih operatorjev
+// function racBit(prvo, operator, drugo = 0){
+//     if(operator == "&"){
+//         let result = numSistem[trenutniSistem] + (prvo & drugo).toString(numSistem2[trenutniSistem]); //Zamenjaj z lastno funkcijo za pretvorbo
+//         return result;
+//     }
+//     else if(operator == "|"){
+//         let result = numSistem[trenutniSistem] + (prvo | drugo).toString(numSistem2[trenutniSistem]);
+//         return result;
+//     }
+//     else if(operator == "^"){
+//         let result = numSistem[trenutniSistem] + (prvo ^ drugo).toString(numSistem2[trenutniSistem]);
+//         return result;
+//     }
+//     else if(operator == "~"){
+//         len = prvo.length;
+//         if(trenutniSistem != 2)
+//             len -= 2;
+//         result = numSistem[trenutniSistem] + (~prvo >>> 0).toString(numSistem2[trenutniSistem]);
+//         result = numSistem[trenutniSistem] + result.substring((result.length) - len);
+//         return result;
+//     }
+// }
+
 function racBit(prvo, operator, drugo = 0){
+    let result = "";
     if(operator == "&"){
-        let result = numSistem[trenutniSistem] + (prvo & drugo).toString(numSistem2[trenutniSistem]); //Zamenjaj z lastno funkcijo za pretvorbo
+        result += (prvo & drugo); //Zamenjaj z lastno funkcijo za pretvorbo
         return result;
     }
     else if(operator == "|"){
-        let result = numSistem[trenutniSistem] + (prvo | drugo).toString(numSistem2[trenutniSistem]);
+        result += (prvo | drugo);
         return result;
     }
     else if(operator == "^"){
-        let result = numSistem[trenutniSistem] + (prvo ^ drugo).toString(numSistem2[trenutniSistem]);
+        result += (prvo ^ drugo);
         return result;
     }
-    else if(operator == "~"){
+    else if(operator == "~"){ //Popravi
         len = prvo.length;
-        if(trenutniSistem != 2)
+        if(trenutniSistem != 2){
             len -= 2;
-        result = numSistem[trenutniSistem] + (~prvo >>> 0).toString(numSistem2[trenutniSistem]);
+        } 
+        result = numSistem[trenutniSistem] + (~prvo >>> 0);
         result = numSistem[trenutniSistem] + result.substring((result.length) - len);
         return result;
+    }
+}
+
+//Ni še dokončano
+function izrazLogicna(){
+    let izraz = document.getElementById("vnos").value.split(" ");
+    let result;
+    if(izraz[0] == "~"){
+        izraz[0] = numSistem[trenutniSistem] + izraz[0];
+        result = racBit(izraz[1], izraz[0]);
+    }
+    else {
+        izraz[0] = numSistem[trenutniSistem] + izraz[0];
+        izraz[2] = numSistem[trenutniSistem] + izraz[2];
+        result = racBit(izraz[0], izraz[1], izraz[2]);
+    }
+    
+    let prejSistem = trenutniSistem;
+    document.getElementById("vnos").value = result;
+    trenutniSistem = 2;
+    if(prejSistem == 0){
+        toBinConversion();
+    }
+    else if(prejSistem == 1){
+        toOctConversion();
+    }
+    else if(prejSistem == 3){
+        toHexConversion();
     }
 }
 
