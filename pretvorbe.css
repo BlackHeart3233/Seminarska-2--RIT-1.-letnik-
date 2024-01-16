@@ -1,0 +1,15 @@
+#vnosi_pretvorb {
+    display: flex;
+    align-items: center;
+    height: 100px;
+    border: solid 1px black;
+}
+
+
+
+#dopdown1,
+#dopdown2 {
+    margin-left: 10px;
+
+}
+
