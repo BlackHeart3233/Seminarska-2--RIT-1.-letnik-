@@ -55,5 +55,8 @@ nav{
     border: 1px solid FF9F1B;
     color:white;
     font-size: 20px;
+}
 
+.conversion-active{
+    background-color: red;
 }
