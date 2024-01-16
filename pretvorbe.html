@@ -14,7 +14,42 @@
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="osnovni_kalkulator.html">Osnovni kalkulator</a>
         <a  class="navbar-brand" href="pretvorbe.html">Pretvorbeni kalkulator</a>
-        <a  class="navbar-brand" href="">Dokumenti</a>       
-    </nav>
+        <a  class="navbar-brand" href="">Dokumenti</a>      
+    </nav>   
+        <div id="calc" class="mx-auto" >
+            <input readonly id="vnos"></input>
+            <div id="gumbi2"class="mx-auto">
+                <div class="calc_st" ></div>
+                <div class="calc_fun" onclick='IzbrisiEno()'><-</div>
+                <div class="calc_fun" onclick='Izbrisi()'>C</div>
+                <div class="calc_fun" >=</div>
+                <div class="calc_st" ></div>
+                
+                <div class="calc_st"onclick='DodamVDisplay("")'>DEC</div>
+                <div class="calc_st"onclick='DodamVDisplay("1")'>1</div>
+                <div class="calc_st"onclick='DodamVDisplay("2")'>2</div>
+                <div class="calc_st"onclick='DodamVDisplay("3")'>3</div>
+                <div class="calc_st"onclick='DodamVDisplay("~")'>NOT</div>
+                 
+                <div class="calc_st"onclick='DodamVDisplay("")'>BIN</div>
+                <div class="calc_st"onclick='DodamVDisplay("4")'>4</div>
+                <div class="calc_st"onclick='DodamVDisplay("5")'>5</div>
+                <div class="calc_st" onclick='DodamVDisplay("6")'>6</div>
+                <div class="calc_st"onclick='DodamVDisplay("&")'>AND</div>
+            
+                <div class="calc_st"onclick='DodamVDisplay("")'>OCT</div>
+                <div class="calc_st"onclick='DodamVDisplay("7")'>7</div>
+                <div class="calc_st"onclick='DodamVDisplay("8")'>8</div>
+                <div class="calc_st"onclick='DodamVDisplay("9")'>9</div>
+                <div class="calc_st"onclick='DodamVDisplay("|")'>OR</div>
+                
+                <div class="calc_st"onclick='DodamVDisplay("")'>HEX</div>
+                <div class="calc_st" ></div>
+                <div class="calc_st"onclick='DodamVDisplay("0")'>0</div>
+                <div class="calc_st" ></div>
+                <div class="calc_st"onclick='DodamVDisplay("^")'>XOR</div>
+            </div>
+        </div>
+    
 </body>
 </html>
