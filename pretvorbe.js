@@ -73,21 +73,25 @@ function IzBINvOCT(VnosStevila){
     
     for (let i = dolzina_stevila - 1; i >= 0; i--) {
         let branje_stevila = VnosStevila[i];
-    
-        if (branje_stevila === "1") {
+        if (branje_stevila == "1") {
             stejem_stevilo += stevec;
         }
         stevec *= 2;
         stevec_spremembe += 1;
-        if (stevec_spremembe === 3) {
+        if (stevec_spremembe == 3) {
             stevec_spremembe = 0;
             stevec = 1;
-    
             for (let l = 0; l < 8; l++) {
                 if (list[l] == stejem_stevilo) {
-                    Stevilo_v_sistem = list[l] + Stevilo_v_sistem;}}
+                    Stevilo_v_sistem = list[l] + Stevilo_v_sistem;
+                }
+            }
             stejem_stevilo = 0;
-        }}
+        }
+    }
+    if (stejem_stevilo != 0) {
+        Stevilo_v_sistem = stejem_stevilo + Stevilo_v_sistem;
+    }
     return Stevilo_v_sistem;   
 
 }
@@ -173,7 +177,7 @@ function OCT(VSistem,VnosStevila){
         var Stevilo_v_sistem = IzOCTvBIN(VnosStevila);
     }else if(VSistem =="HEX"){
         var Stevilo_v_sistem = IzOCTvBIN(VnosStevila);
-        var Stevilo_v_sistem = IzBINvHEX(VnosStevila)
+        Stevilo_v_sistem = IzBINvHEX(Stevilo_v_sistem)
     }
     let = document.getElementById("vnos_stevila1").value = Stevilo_v_sistem;
 }
