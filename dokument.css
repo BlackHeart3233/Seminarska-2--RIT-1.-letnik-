@@ -12,11 +12,16 @@
 
 #display_St_sistemi{
     grid-column: 2 / span 3;
+    border: 1px solid black;
 }
 #FileStSistemi{
     grid-column: 2/span 1;
 }
 #submit_StSistemi{
     grid-column: 4/span 1;
+
+}
+td{
+    padding: 5px;
 
 }
