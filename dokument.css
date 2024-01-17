@@ -1,0 +1,22 @@
+#Stevislki_sistem_box{
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+    row-gap: 10%;
+    margin-top: 2%;
+    align-content: center;
+}
+#naslov_StSistemi{
+    grid-column: 1 /span 5;
+    text-align: center;
+}
+
+#display_St_sistemi{
+    grid-column: 2 / span 3;
+}
+#FileStSistemi{
+    grid-column: 2/span 1;
+}
+#submit_StSistemi{
+    grid-column: 4/span 1;
+
+}

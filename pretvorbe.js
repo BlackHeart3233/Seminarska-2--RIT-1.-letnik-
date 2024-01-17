@@ -1,19 +1,29 @@
-function Rezultat() {
-    var IzSistema = document.getElementById("IzSistema").value;
-    var VSistem = document.getElementById("VSistem").value;
-    var VnosStevila = document.getElementById("vnos_stevila1").value
+export function Rezultat(BeremIzDatoteke,IzSistema,VnosStevila,VSistem) {
+    if (IzSistema === undefined && VnosStevila === undefined && VnosStevila === undefined){
+        var IzSistema = document.getElementById("IzSistema").value;
+        var VSistem = document.getElementById("VSistem").value;
+        var VnosStevila = document.getElementById("vnos_stevila1").value
+    }
+    var Stevilo_v_sistem;
     if(IzSistema == "BIN"){
-        BIN(VSistem, VnosStevila);
+        Stevilo_v_sistem = BIN(VSistem, VnosStevila);
     }else if(IzSistema == "DEC"){
-        DEC(VSistem, VnosStevila);
+        Stevilo_v_sistem = DEC(VSistem, VnosStevila);
     }else if(IzSistema == "OCT"){
-        OCT(VSistem, VnosStevila);
+        Stevilo_v_sistem = OCT(VSistem, VnosStevila);
     }else if(IzSistema == "HEX"){
-        HEX(VSistem, VnosStevila);
+        Stevilo_v_sistem = HEX(VSistem, VnosStevila);
+    }
+    alert(Stevilo_v_sistem);
+    if(BeremIzDatoteke != "false"){
+        return Stevilo_v_sistem;
+    }else{
+        var KamVpisem = document.getElementById("KamIzpis").value;
+        document.getElementById(KamVpisem).value = Stevilo_v_sistem;
     }
 }
 
-function IzDECvBIN(VnosStevila){
+export function IzDECvBIN(VnosStevila){
     var Stevilo_v_sistem ="";
     let zacasno_st = 0;
     let ostanek;
@@ -35,7 +45,7 @@ function IzDECvBIN(VnosStevila){
 }
 
 
-function IzBINvHEX(VnosStevila){
+ export function IzBINvHEX(VnosStevila){
             let stevec = 1;
             var Stevilo_v_sistem = "";
             let stejem_stevilo = 0;
@@ -63,7 +73,7 @@ function IzBINvHEX(VnosStevila){
             return Stevilo_v_sistem;
 }
 
-function IzBINvOCT(VnosStevila){
+ export function IzBINvOCT(VnosStevila){
     let stevec = 1;
     var Stevilo_v_sistem = "";
     let stejem_stevilo = 0;
@@ -96,7 +106,7 @@ function IzBINvOCT(VnosStevila){
 
 }
 
-function IzHEXvBIN(VnosStevila){
+ export function IzHEXvBIN(VnosStevila){
     let Stevilo_v_sistem ="";
     let dolzina_stevila = VnosStevila.length;
     let list = [["0","0000"], ["1","0001"], ["2","0010"], ["3","0011"], ["4","0100"], ["5","0101"], ["6","0110"] ,["7","0111"], ["8","1000"], ["9","1001"], ["A","1010"], ["B","1011"], ["C","1100"], ["D","1101"], ["E","1110"], ["F","1111"]];
@@ -112,7 +122,7 @@ function IzHEXvBIN(VnosStevila){
 return Stevilo_v_sistem
 }
 
-function IzOCTvBIN(VnosStevila){
+ export function IzOCTvBIN(VnosStevila){
     var list = [[0, "000"], [1, "001"], [2, "010"], [3, "011"], [4, "100"], [5, "101"], [6, "110"], [7, "111"]];
     var dolzina_stevila = VnosStevila.length;
     var Stevilo_v_sistem = "";
@@ -129,7 +139,7 @@ function IzOCTvBIN(VnosStevila){
     return Stevilo_v_sistem;
 }
 
-function IzBINvDEC(VnosStevila){
+ export function IzBINvDEC(VnosStevila){
     let stevec = 1;
     var Stevilo_v_sistem = 0;
     let dolzina_stevila = VnosStevila.length;
@@ -144,7 +154,7 @@ function IzBINvDEC(VnosStevila){
     return Stevilo_v_sistem
 }
 
-function BIN(VSistem,VnosStevila) {
+ export function BIN(VSistem,VnosStevila) {
     if(VSistem == "DEC"){
         var Stevilo_v_sistem = IzBINvDEC(VnosStevila);
     }else if(VSistem == "OCT"){
@@ -152,10 +162,9 @@ function BIN(VSistem,VnosStevila) {
     }else if(VSistem == "HEX"){
         var Stevilo_v_sistem = IzBINvHEX(VnosStevila)
     }   
-   let = document.getElementById("vnos_stevila1").value = Stevilo_v_sistem;
-
+    return Stevilo_v_sistem;
 }
-function HEX(VSistem,VnosStevila) {
+ export function HEX(VSistem,VnosStevila) {
     if(VSistem == "DEC"){
         var Stevilo_v_sistem = IzHEXvBIN(VnosStevila);
         Stevilo_v_sistem = IzBINvDEC(Stevilo_v_sistem);
@@ -166,10 +175,10 @@ function HEX(VSistem,VnosStevila) {
         var Stevilo_v_sistem = IzBINvOCT(bin_stevilo);
         Stevilo_v_sistem = Stevilo_v_sistem.replace(/^0+/, '');
     }
-let = document.getElementById("vnos_stevila1").value = Stevilo_v_sistem;
+    return Stevilo_v_sistem;
 }
 
-function OCT(VSistem,VnosStevila){
+ export function OCT(VSistem,VnosStevila){
     if( VSistem == "DEC"){
         var Stevilo_v_sistem = IzOCTvBIN(VnosStevila);
         Stevilo_v_sistem = IzBINvDEC(Stevilo_v_sistem);
@@ -179,10 +188,10 @@ function OCT(VSistem,VnosStevila){
         var Stevilo_v_sistem = IzOCTvBIN(VnosStevila);
         Stevilo_v_sistem = IzBINvHEX(Stevilo_v_sistem)
     }
-    let = document.getElementById("vnos_stevila1").value = Stevilo_v_sistem;
+    return Stevilo_v_sistem;
 }
 
-function DEC(VSistem,VnosStevila){
+ export function DEC(VSistem,VnosStevila){
     if(VSistem =="BIN"){
        var Stevilo_v_sistem = IzDECvBIN(VnosStevila);
     }else if(VSistem =="OCT"){
@@ -192,5 +201,5 @@ function DEC(VSistem,VnosStevila){
         var Stevilo_v_sistem = IzDECvBIN(VnosStevila);
         Stevilo_v_sistem = IzBINvHEX(Stevilo_v_sistem);
     }
-    let = document.getElementById("vnos_stevila1").value = Stevilo_v_sistem;
+    return Stevilo_v_sistem;
 }
