@@ -17,7 +17,7 @@
     }else if(IzSistema == "HEX"){
         Stevilo_v_sistem = HEX(VSistem, VnosStevila);
     }
-    alert(Stevilo_v_sistem);
+    //alert(Stevilo_v_sistem);
     if(BeremIzDatoteke != "false"){
         return Stevilo_v_sistem;
     }else{
