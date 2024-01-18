@@ -67,9 +67,3 @@ function izrazLogicna(){
     }
     document.getElementById("vnos_stevila2").value = result;
 }
-//alert(0b1001 & 0b1101);
-
-//Testiranje
-//console.log(vecRacBit("15 | 12 & 13"));
-//console.log(vecRacBit("~a3b"));
-//console.log(eval("~11011 | 10111 & 101"));

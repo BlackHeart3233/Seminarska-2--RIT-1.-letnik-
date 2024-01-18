@@ -180,31 +180,3 @@ function binToHex(stevilo){
 
     return result;
 }
-
-
-
-//LOGICNI OPERATORJI
-
-//Računanje posameznih operatorjev
-// function racBit(prvo, operator, drugo = 0){
-//     if(operator == "&"){
-//         let result = numSistem[trenutniSistem] + (prvo & drugo).toString(numSistem2[trenutniSistem]); //Zamenjaj z lastno funkcijo za pretvorbo
-//         return result;
-//     }
-//     else if(operator == "|"){
-//         let result = numSistem[trenutniSistem] + (prvo | drugo).toString(numSistem2[trenutniSistem]);
-//         return result;
-//     }
-//     else if(operator == "^"){
-//         let result = numSistem[trenutniSistem] + (prvo ^ drugo).toString(numSistem2[trenutniSistem]);
-//         return result;
-//     }
-//     else if(operator == "~"){
-//         len = prvo.length;
-//         if(trenutniSistem != 2)
-//             len -= 2;
-//         result = numSistem[trenutniSistem] + (~prvo >>> 0).toString(numSistem2[trenutniSistem]);
-//         result = numSistem[trenutniSistem] + result.substring((result.length) - len);
-//         return result;
-//     }
-// }
