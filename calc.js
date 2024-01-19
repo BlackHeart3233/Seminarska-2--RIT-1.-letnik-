@@ -2,9 +2,11 @@
 function Izracunaj() {
     let racun = document.getElementById("vnos").value;
 
-    racun = racun.replace(/sqrt\s*\(\s*(.*?)\s*\)/g, (_, vsebina) => Math.sqrt(eval(vsebina)));
-    racun = racun.replace(/pow\s*\(\s*(.*?)\s*,\s*(.*?)\s*\)/g, (_, baza, eksponent) => Math.pow(eval(baza), eval(eksponent)));
+    racun = racun.replace(/sqrt\s*\(\s*(.*?)\s*\)/g, (_, vsebina) => Math.sqrt(+(vsebina)));
+    racun = racun.replace(/pow\s*\(\s*(.*?)\s*,\s*(.*?)\s*\)/g, (_, baza, eksponent) => Math.pow(+(baza), +(eksponent)));
   
+
+    alert(racun);
     document.getElementById("vnos").value = eval(racun);
 }
   
@@ -20,7 +22,7 @@ function IzbrisiEno(){
     let vnos = document.getElementById("vnos").value;
     document.getElementById("vnos").value = vnos.slice(0, -1);
 }
-
+/*
 //PRETVORBA MED ŠTEVILSKIMI SISTEMI
 //Za naret še, gumi za a,b,c,d,e,f
 //Onemogočanje vpisovanja števil, ki niso možna v tem sistemu
@@ -180,3 +182,4 @@ function binToHex(stevilo){
 
     return result;
 }
+*/
