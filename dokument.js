@@ -2,11 +2,18 @@
 /*remove everything after*/
 
  function Rezultat(BeremIzDatoteke,IzSistema,VnosStevila,VSistem) {
-    if (IzSistema === undefined && VnosStevila === undefined && VnosStevila === undefined){
+
+    if (BeremIzDatoteke == "false"){
         var IzSistema = document.getElementById("IzSistema").value;
         var VSistem = document.getElementById("VSistem").value;
         var VnosStevila = document.getElementById("vnos_stevila1").value
-    }
+        //alert("im here")
+    } 
+    //alert(IzSistema);
+    //alert(VSistem);
+    //alert(VnosStevila);
+
+
     var Stevilo_v_sistem;
     if(IzSistema == "BIN"){
         Stevilo_v_sistem = BIN(VSistem, VnosStevila);
@@ -15,9 +22,10 @@
     }else if(IzSistema == "OCT"){
         Stevilo_v_sistem = OCT(VSistem, VnosStevila);
     }else if(IzSistema == "HEX"){
+        VnosStevila = VnosStevila.toUpperCase();
         Stevilo_v_sistem = HEX(VSistem, VnosStevila);
     }
-    //alert(Stevilo_v_sistem);
+
     if(BeremIzDatoteke != "false"){
         return Stevilo_v_sistem;
     }else{
@@ -131,7 +139,7 @@ return Stevilo_v_sistem
     var Stevilo_v_sistem = "";
 
     for (let i = dolzina_stevila - 1; i >= 0; i--) {
-        let branje_stevila = parseInt(VnosStevila[i], 10); // Convert to a number
+        let branje_stevila = parseInt(VnosStevila[i], 10); 
         for (let l = 0; l < 8; l++) {
             if (branje_stevila === list[l][0]) {
                 Stevilo_v_sistem = list[l][1] + Stevilo_v_sistem;
@@ -167,7 +175,7 @@ return Stevilo_v_sistem
     }   
     return Stevilo_v_sistem;
 }
-  function HEX(VSistem,VnosStevila) {
+  function HEX(VSistem,VnosStevila) {    
     if(VSistem == "DEC"){
         var Stevilo_v_sistem = IzHEXvBIN(VnosStevila);
         Stevilo_v_sistem = IzBINvDEC(Stevilo_v_sistem);
@@ -228,8 +236,6 @@ function BranjeDatotekeStSistemov() {
         reader.readAsText(fileInput.files[0]);
     }
 }
-
-
 function LineToResult(line){
     let racun = "";
     let stevec =0;
@@ -243,4 +249,150 @@ function LineToResult(line){
     let VnosStevila = list[1];
     let VSistem = list[2];
     return Rezultat(true,IzSistema,VnosStevila,VSistem);
+}
+
+
+
+
+//od tukaj naprej branje za osnovni kalkulator
+//OSNOVNI
+function DodamVDisplay(vnos){
+    document.getElementById("vnos").value += vnos;
+}
+
+function Izbrisi(){
+    document.getElementById("vnos").value = "";
+}
+
+function IzbrisiEno(){
+    let vnos = document.getElementById("vnos").value;
+    document.getElementById("vnos").value = vnos.slice(0, -1);
+}
+
+function NamestoEval(test){
+    //var test="2 + ( 3 * ( 8 - 4  ) ) ="
+    test += " = "
+    var stevilke ="";
+    var operatorji_brez_zaklepaja ="";
+    var zaklepaji =0;
+    var stevec = 0;
+    var prej_stevilo = false;
+    var prejoperator = true;
+    var operatoriji_po_urejanu ="";
+    //alert(test);
+    
+
+    while (test[stevec] != "="){
+        if(isNaN(test[stevec]) &&test[stevec] !="."&&prej_stevilo==true&&prejoperator==false){
+            stevilke += " ";
+        }else if(isNaN(test[stevec]) == false ||test[stevec] =="." &&prej_stevilo==false&&prejoperator==true){
+            operatorji_brez_zaklepaja += " ";
+        }
+
+        if (test[stevec] == ")"){
+            zaklepaji +=1;
+            prejoperator =true
+            prej_stevilo = false;
+
+
+        }else if(isNaN(test[stevec]) && test[stevec] !="." && prejoperator == false){
+            operatorji_brez_zaklepaja += test[stevec];
+            prej_stevilo = false;
+            prejoperator = true;
+        }else if(test[stevec] == "("){
+            operatorji_brez_zaklepaja += " "+test[stevec];
+            prej_stevilo = false;
+            prejoperator = true;
+        }else{
+            stevilke += test[stevec];
+            prej_stevilo = true;
+            prejoperator = false;
+
+
+        }
+        stevec +=1;
+        //alert("smo stevila: "+stevilke)
+        //alert("smo operatorji"+operatorji_brez_zaklepaja)
+    }
+
+    
+    stevec=0;
+    let dolzina_brez_oklepaja = operatorji_brez_zaklepaja.length;
+    while (zaklepaji != 0 || stevec < dolzina_brez_oklepaja){
+        if(operatorji_brez_zaklepaja[stevec] != "("){
+            operatoriji_po_urejanu += operatorji_brez_zaklepaja[stevec]
+            
+        }else{
+          zaklepaji -=1;
+        }
+        stevec +=1;
+    }
+    
+    
+    let array_operatoriji = operatoriji_po_urejanu.split(" ").filter(Boolean).reverse();
+    let array_stevilke = stevilke.split(" ").filter(Boolean).reverse();
+    
+    
+    while (array_operatoriji.length >0){
+        let stevilo1= +(array_stevilke[1]);
+        let stevilo2 = +(array_stevilke[0]);
+    
+    
+        let racun = 0;
+        if(array_operatoriji[0] == "+"){
+            racun  = stevilo1 + stevilo2;
+        }else if(array_operatoriji[0] == "-"){
+            racun = stevilo1 - stevilo2;
+        }else if(array_operatoriji[0] == "/"){
+            racun = stevilo1/stevilo2;
+        }else if(array_operatoriji[0] == "*"){
+            racun = stevilo1*stevilo2;
+        }
+        array_operatoriji.shift();
+        array_stevilke.shift();
+        array_stevilke[0] = racun;
+    }
+    return array_stevilke[0];
+    }
+
+function Izracunaj(racun,IzDatoteke) {
+    if (IzDatoteke == false){
+        var racun = document.getElementById("vnos").value;
+    }
+    //alert(racun);
+    racun = racun.replace(/sqrt\s*\(\s*(.*?)\s*\)/g, (_, vsebina) => {
+        let test = NamestoEval(vsebina)
+        racun = Math.sqrt(+(test))
+        recun = racun.toFixed(2)
+        return recun;
+      });
+    racun = racun.replace(/pow\s*\(\s*(.*?)\s*,\s*(.*?)\s*\)/g, (_, baza, eksponent) => Math.pow(+(baza), +(eksponent)));
+  
+    if(IzDatoteke == false){
+        document.getElementById("vnos").value = NamestoEval(racun);
+    }else{
+        return NamestoEval(racun);
+    }
+}
+
+function BranjeDatotekeOsnovniCalc(){
+    var fileInput = document.getElementById('FileOsnovni');
+    if (fileInput.files.length > 0) {
+        var reader = new FileReader();
+        document.getElementById('display_Osnovni').innerHTML ="";
+        reader.onload = function (event) {
+            var Display = document.getElementById('display_Osnovni');
+            var lines = event.target.result.split('\n');
+            let Izracun;
+
+            for (var i = 0; i < lines.length; i++) {
+                //alert(lines[i]);
+                Izracun = Izracunaj(lines[i],true)
+                Display.innerHTML += "<tr><td>" +lines[i]+ " "+Izracun+"</td></tr>";
+
+            }
+        };
+
+        reader.readAsText(fileInput.files[0]);
+    }
 }
