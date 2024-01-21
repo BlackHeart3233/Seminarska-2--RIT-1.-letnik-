@@ -269,91 +269,118 @@ function IzbrisiEno(){
     document.getElementById("vnos").value = vnos.slice(0, -1);
 }
 
-function NamestoEval(test){
-    //var test="2 + ( 3 * ( 8 - 4  ) ) ="
-    test += " = "
-    var stevilke ="";
-    var operatorji_brez_zaklepaja ="";
-    var zaklepaji =0;
+function NamestoEval(racun) {
+    var izhodni = "";
+    var operatorji = "";
     var stevec = 0;
-    var prej_stevilo = false;
-    var prejoperator = true;
-    var operatoriji_po_urejanu ="";
-    //alert(test);
-    
+    var prejStevilo = false;
+    var prejOperator = true;
+    var obstaja_dot =false;
 
-    while (test[stevec] != "="){
-        if(isNaN(test[stevec]) &&test[stevec] !="."&&prej_stevilo==true&&prejoperator==false){
-            stevilke += " ";
-        }else if(isNaN(test[stevec]) == false ||test[stevec] =="." &&prej_stevilo==false&&prejoperator==true){
-            operatorji_brez_zaklepaja += " ";
+    const precedence = {
+        '+': 1,
+        '-': 1,
+        '*': 2,
+        '/': 2,
+    };
+
+    while (stevec < racun.length) {
+        var trenutna_izbira = racun[stevec];
+
+        if (!isNaN(trenutna_izbira) || trenutna_izbira == '.' || (trenutna_izbira == '-' && prejStevilo == false && prejOperator == true)) {
+            if (prejStevilo) {
+                izhodni += trenutna_izbira;
+            } else {
+                izhodni += " " + trenutna_izbira;
+            }
+
+            if(trenutna_izbira == "."){
+                obstaja_dot = true;
+            }
+            prejStevilo = true;    
+        } else if (trenutna_izbira == '(') {
+            operatorji += trenutna_izbira;
+            prejOperator = true
+            prejStevilo = false;
+        } else if (trenutna_izbira == ')') {
+            while (operatorji.slice(-1) !== '(') {
+                izhodni += " " + operatorji.slice(-1);
+                operatorji = operatorji.slice(0, -1);
+            }
+            operatorji = operatorji.slice(0, -1);
+            prejStevilo = false;
+            prejOperator = true;
+        } else if (precedence[trenutna_izbira] != undefined) {
+            while (operatorji != "" && operatorji.slice(-1) != '(' && precedence[trenutna_izbira] <= precedence[operatorji.slice(-1)]) {
+                izhodni += " " + operatorji.slice(-1);
+                operatorji = operatorji.slice(0, -1);
+            }
+            operatorji += " " + trenutna_izbira;
+            prejStevilo = false;
+            prejOperator = true;
+        } else {
+            prejStevilo = false;
         }
 
-        if (test[stevec] == ")"){
-            zaklepaji +=1;
-            prejoperator =true
-            prej_stevilo = false;
+        stevec += 1;
+    }
 
+    while (operatorji != "") {
+        izhodni += " " + operatorji.slice(-1);
+        operatorji = operatorji.slice(0, -1);
+    }
 
-        }else if(isNaN(test[stevec]) && test[stevec] !="." && prejoperator == false){
-            operatorji_brez_zaklepaja += test[stevec];
-            prej_stevilo = false;
-            prejoperator = true;
-        }else if(test[stevec] == "("){
-            operatorji_brez_zaklepaja += " "+test[stevec];
-            prej_stevilo = false;
-            prejoperator = true;
-        }else{
-            stevilke += test[stevec];
-            prej_stevilo = true;
-            prejoperator = false;
+    izhodni = izhodni.trim().split(/\s+/); 
 
-
+    var zacasni_list =[];
+    var st=0;
+    var st_za_for =0;
+    var izracun=0;
+    while (izhodni.length != 1){
+        while(isNaN(izhodni[st]) == false){
+            st +=1;
         }
-        stevec +=1;
-        //alert("smo stevila: "+stevilke)
-        //alert("smo operatorji"+operatorji_brez_zaklepaja)
-    }
 
-    
-    stevec=0;
-    let dolzina_brez_oklepaja = operatorji_brez_zaklepaja.length;
-    while (zaklepaji != 0 || stevec < dolzina_brez_oklepaja){
-        if(operatorji_brez_zaklepaja[stevec] != "("){
-            operatoriji_po_urejanu += operatorji_brez_zaklepaja[stevec]
-            
-        }else{
-          zaklepaji -=1;
+        stevilo1 = izhodni[st-2];
+        stevilo2 = izhodni[st-1];
+        operator = izhodni[st];
+
+        if(operator == "+"){
+            izracun = +(stevilo1) + +(stevilo2);
+        }else if(operator =="-"){
+            izracun = +(stevilo1) - +(stevilo2);
+        }else if(operator == "*"){
+            izracun = +(stevilo1) * +(stevilo2);
+        }else if(operator =="/"){
+            izracun = +(stevilo1) / +(stevilo2);
         }
-        stevec +=1;
-    }
-    
-    
-    let array_operatoriji = operatoriji_po_urejanu.split(" ").filter(Boolean).reverse();
-    let array_stevilke = stevilke.split(" ").filter(Boolean).reverse();
-    
-    
-    while (array_operatoriji.length >0){
-        let stevilo1= +(array_stevilke[1]);
-        let stevilo2 = +(array_stevilke[0]);
-    
-    
-        let racun = 0;
-        if(array_operatoriji[0] == "+"){
-            racun  = stevilo1 + stevilo2;
-        }else if(array_operatoriji[0] == "-"){
-            racun = stevilo1 - stevilo2;
-        }else if(array_operatoriji[0] == "/"){
-            racun = stevilo1/stevilo2;
-        }else if(array_operatoriji[0] == "*"){
-            racun = stevilo1*stevilo2;
+        //throw new Error("test");
+        st_za_for = 0;
+        for(let i = 0; i<izhodni.length;i++){
+            if((st-1) != i && (st-2) != i && st !=i){
+                zacasni_list[st_za_for] = izhodni[i];
+                st_za_for+=1;
+            }
+            if(st == i){
+                zacasni_list[st_za_for] = izracun;
+                st_za_for +=1;
+                izracun = 0;
+            }
         }
-        array_operatoriji.shift();
-        array_stevilke.shift();
-        array_stevilke[0] = racun;
+        izhodni = [];
+        izhodni = zacasni_list;
+        zacasni_list = []
+        st=0;
     }
-    return array_stevilke[0];
+    if(Number.isInteger(izhodni[0])== true){
+        return izhodni[0];
+
+    }else{
+        return izhodni[0].toFixed(2);
+
     }
+}
+
 
 function Izracunaj(racun,IzDatoteke) {
     if (IzDatoteke == false){
