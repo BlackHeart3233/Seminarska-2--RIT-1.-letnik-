@@ -275,8 +275,6 @@ function NamestoEval(racun) {
     var stevec = 0;
     var prejStevilo = false;
     var prejOperator = true;
-    var obstaja_dot =false;
-
     const precedence = {
         '+': 1,
         '-': 1,
@@ -292,10 +290,6 @@ function NamestoEval(racun) {
                 izhodni += trenutna_izbira;
             } else {
                 izhodni += " " + trenutna_izbira;
-            }
-
-            if(trenutna_izbira == "."){
-                obstaja_dot = true;
             }
             prejStevilo = true;    
         } else if (trenutna_izbira == '(') {
