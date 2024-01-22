@@ -282,19 +282,21 @@ function IzbrisiEno(){
 
 //Shunting Yard algoritem
 function NamestoEval(racun) {
+    racun +="="
     var izhodni = "";
     var operatorji = "";
     var stevec = 0;
     var prejStevilo = false;
     var prejOperator = true;
-    const precedence = {
+    const operatorji_po_vrerdnosti = {
         '+': 1,
         '-': 1,
         '*': 2,
         '/': 2,
+        '%': 2
     };
 
-    while (stevec < racun.length) {
+    while (racun[stevec] != "=") {
         var trenutna_izbira = racun[stevec];
 
         if (!isNaN(trenutna_izbira) || trenutna_izbira == '.' || (trenutna_izbira == '-' && prejStevilo == false && prejOperator == true)) {
@@ -316,8 +318,8 @@ function NamestoEval(racun) {
             operatorji = operatorji.slice(0, -1);
             prejStevilo = false;
             prejOperator = true;
-        } else if (precedence[trenutna_izbira] != undefined) {
-            while (operatorji != "" && operatorji.slice(-1) != '(' && precedence[trenutna_izbira] <= precedence[operatorji.slice(-1)]) {
+        } else if (operatorji_po_vrerdnosti[trenutna_izbira] != undefined) {
+            while (operatorji != "" && operatorji.slice(-1) != '(' && operatorji_po_vrerdnosti[trenutna_izbira] <= operatorji_po_vrerdnosti[operatorji.slice(-1)]) {
                 izhodni += " " + operatorji.slice(-1);
                 operatorji = operatorji.slice(0, -1);
             }
@@ -342,7 +344,13 @@ function NamestoEval(racun) {
     var st=0;
     var st_za_for =0;
     var izracun=0;
+    var samo_ena = false;
+    if(izhodni.length ==1){
+        samo_ena = true;
+    }
+
     while (izhodni.length != 1){
+        samo_ena = false;
         while(isNaN(izhodni[st]) == false){
             st +=1;
         }
@@ -359,6 +367,8 @@ function NamestoEval(racun) {
             izracun = +(stevilo1) * +(stevilo2);
         }else if(operator =="/"){
             izracun = +(stevilo1) / +(stevilo2);
+        }else if(operator == "%"){
+            izracun = +(stevilo1) % +(stevilo2);
         }
 
         st_za_for = 0;
@@ -378,11 +388,11 @@ function NamestoEval(racun) {
         zacasni_list = []
         st=0;
     }
-    if(Number.isInteger(izhodni[0])== true){
+    if(Number.isInteger(+(izhodni[0]))== true){
         return izhodni[0];
 
     }else{
-        return izhodni[0].toFixed(2);
+        return (+(izhodni[0])).toFixed(2);
 
     }
 }
