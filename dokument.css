@@ -5,6 +5,7 @@
     margin-top: 2%;
     align-content: center;
 }
+
 #naslov_StSistemi{
     grid-column: 1 /span 5;
     text-align: center;
@@ -14,20 +15,20 @@
     grid-column: 2 / span 3;
     border: 1px solid black;
 }
+
 #FileStSistemi{
     grid-column: 2/span 1;
 }
+
 #submit_StSistemi{
     grid-column: 4/span 1;
-
 }
+
 td{
     padding: 5px;
-
 }
 
 #Osnovni_cal_box{
-
     display: grid;
     grid-template-columns: 20% 20% 20% 20% 20%;
     row-gap: 10%;
@@ -43,9 +44,11 @@ td{
     grid-column: 2 / span 3;
     border: 1px solid black;
 }
+
 #FileOsnovni{
     grid-column: 2/span 1;
 }
+
 #submit_Osnovni{
     grid-column: 4/span 1;
 }

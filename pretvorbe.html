@@ -11,12 +11,12 @@
     <script src="logicna.js"></script>
 </head>
 <body>
-    
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="osnovni_kalkulator.html">Osnovni kalkulator</a>
         <a  class="navbar-brand" href="pretvorbe.html">Pretvorbeni kalkulator</a>
         <a  class="navbar-brand" href="dokument.html">Dokumenti</a>       
     </nav>
+
     <div id="vnosi_pretvorb">
         <div class="col-md-4" id="dopdown1"r>
             <select id="IzSistema" class="form-select">
@@ -25,10 +25,12 @@
               <option>OCT</option>
               <option>HEX</option>
             </select>
-          </div>
+        </div>
+
         <div class="input-group mb-3" id="vnos1">
             <input type="text" id="vnos_stevila1" class="form-control" placeholder="Število 1" aria-describedby="basic-addon1">
         </div>
+
         <div class="col-md-4" id="dopdown2"r>
             <select id="VSistem" class="form-select">
               <option selected>DEC</option>
@@ -45,13 +47,16 @@
               <option value="vnos_stevila3">Število 3</option>
             </select>
         </div>
+
         <button type="button" id="submit_form" onclick="Rezultat('false')" class="btn btn-secondary">Rezultat</button>
     </div>
     
+
     <div id="Vnosi_logicni_operatorji">
         <div class="input-group mb-3" id="vnos2">
             <input type="text" id="vnos_stevila2" class="form-control" placeholder="Število 2 (binarno)" aria-describedby="basic-addon1">
         </div>
+        
         <div class="col-md-4" id="dopdown4"r>
             <select id="Logicni" class="form-select">
               <option selected>AND</option>
@@ -60,11 +65,11 @@
               <option>NOT</option>
             </select>
         </div>
+
         <div class="input-group mb-3" id="vnos3">
             <input type="text" id="vnos_stevila3" class="form-control" placeholder="Število 3 (binarno)" aria-describedby="basic-addon1">
         </div>
         <button type="button" id="submit_form_logicni" onclick="izrazLogicna()" class="btn btn-secondary">Rezultat</button>
-
     </div>
 </body>
 </html>

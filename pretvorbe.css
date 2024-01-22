@@ -5,13 +5,13 @@
     height: 100px;
     margin-top: 2%;
     row-gap: 20px;
-
 }
 
 #vnos1{
     grid-column: 2 / span 3;
     width: 100%;
 }
+
 #dopdown1{
     width: 80%;
     padding-left:20% ;
@@ -21,16 +21,16 @@
     width: 80%;
     padding-left:20% ;
 }
+
 #dopdown3{
     width: 80%;
     padding-left:20% ;
-
 }
+
 #submit_form{
     width: 80%;
     grid-column: 5 / span 1;
 }
-
 
 #Vnosi_logicni_operatorji{
     display: grid;
@@ -40,27 +40,26 @@
     margin-top: 6%;
     row-gap: 20px;
 }
+
 #vnos2{
     width: 80%;
     grid-column: 1 /span 2;
     margin-left: 10%;
-
 }
+
 #dopdown4{
     width: 80%;
     grid-column: 3 /span 1;
     margin-left: 10%;
-
-
 }
+
 #vnos3{
     width: 80%;
     grid-column: 4 /span 2 ;
     margin-left: 10%;
-
 }
+
 #submit_form_logicni{
     width: 90%;
     grid-column: 5 / span 1;
-
 }

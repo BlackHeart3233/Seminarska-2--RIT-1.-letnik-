@@ -1,3 +1,4 @@
+//LOGIČNA VRATA
 function racBit(prvo, operator, drugo = 0){
     let result = "";
     if(operator == "AND"){
