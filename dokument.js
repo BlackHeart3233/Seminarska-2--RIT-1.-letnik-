@@ -23,7 +23,15 @@ function Rezultat(BeremIzDatoteke,IzSistema,VnosStevila,VSistem) {
         return Stevilo_v_sistem;
     }else{
         var KamVpisem = document.getElementById("KamIzpis").value;
-        document.getElementById(KamVpisem).value = Stevilo_v_sistem;
+        if(KamVpisem == "vnos_stevila2" || KamVpisem == "vnos_stevila3"){
+            if(VSistem == "BIN"){
+                document.getElementById(KamVpisem).value = Stevilo_v_sistem;
+            }
+        }
+        else{
+            document.getElementById(KamVpisem).value = Stevilo_v_sistem;
+        }
+        
     }
 }
 
@@ -157,7 +165,10 @@ function IzBINvDEC(VnosStevila){
 }
 
 function BIN(VSistem,VnosStevila) {
-    if(VSistem == "DEC"){
+    if(VSistem == "BIN"){
+        return VnosStevila;
+    }
+    else if(VSistem == "DEC"){
         var Stevilo_v_sistem = IzBINvDEC(VnosStevila);
     }else if(VSistem == "OCT"){
         var Stevilo_v_sistem = IzBINvOCT(VnosStevila);
@@ -168,7 +179,10 @@ function BIN(VSistem,VnosStevila) {
 }
 
 function HEX(VSistem,VnosStevila) {    
-    if(VSistem == "DEC"){
+    if(VSistem == "HEX"){
+        return VnosStevila;
+    }
+    else if(VSistem == "DEC"){
         var Stevilo_v_sistem = IzHEXvBIN(VnosStevila);
         Stevilo_v_sistem = IzBINvDEC(Stevilo_v_sistem);
     }else if( VSistem == "BIN"){
@@ -182,7 +196,10 @@ function HEX(VSistem,VnosStevila) {
 }
 
 function OCT(VSistem,VnosStevila){
-    if( VSistem == "DEC"){
+    if(VSistem == "OCT"){
+        return VnosStevila;
+    }
+    else if( VSistem == "DEC"){
         var Stevilo_v_sistem = IzOCTvBIN(VnosStevila);
         Stevilo_v_sistem = IzBINvDEC(Stevilo_v_sistem);
     }else if(VSistem == "BIN"){
@@ -195,7 +212,10 @@ function OCT(VSistem,VnosStevila){
 }
 
 function DEC(VSistem,VnosStevila){
-    if(VSistem =="BIN"){
+    if(VSistem == "DEC"){
+        return VnosStevila;
+    }
+    else if(VSistem =="BIN"){
        var Stevilo_v_sistem = IzDECvBIN(VnosStevila);
     }else if(VSistem =="OCT"){
         var Stevilo_v_sistem = IzDECvBIN(VnosStevila);
