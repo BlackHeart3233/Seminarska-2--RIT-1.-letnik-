@@ -1,3 +1,156 @@
+
+//OSNOVNI KALKULATOR
+function DodamVDisplay(vnos){
+    document.getElementById("vnos").value += vnos;
+}
+
+function Izbrisi(){
+    document.getElementById("vnos").value = "";
+}
+
+function IzbrisiEno(){
+    let vnos = document.getElementById("vnos").value;
+    document.getElementById("vnos").value = vnos.slice(0, -1);
+}
+
+//Shunting Yard algoritem
+function NamestoEval(racun) {
+    racun +="="
+    var izhodni = "";
+    var operatorji = "";
+    var stevec = 0;
+    var prejStevilo = false;
+    var prejOperator = true;
+    const operatorji_po_vrerdnosti = {
+        '+': 1,
+        '-': 1,
+        '*': 2,
+        '/': 2,
+        '%': 2
+    };
+
+    while (racun[stevec] != "=") {
+        var trenutna_izbira = racun[stevec];
+
+        if (!isNaN(trenutna_izbira) || trenutna_izbira == '.' || (trenutna_izbira == '-' && prejStevilo == false && prejOperator == true)) {
+            if (prejStevilo) {
+                izhodni += trenutna_izbira;
+            } else {
+                izhodni += " " + trenutna_izbira;
+            }
+            prejStevilo = true;    
+        } else if (trenutna_izbira == '(') {
+            operatorji += trenutna_izbira;
+            prejOperator = true
+            prejStevilo = false;
+        } else if (trenutna_izbira == ')') {
+            while (operatorji.slice(-1) !== '(') {
+                izhodni += " " + operatorji.slice(-1);
+                operatorji = operatorji.slice(0, -1);
+            }
+            operatorji = operatorji.slice(0, -1);
+            prejStevilo = false;
+            prejOperator = true;
+        } else if (operatorji_po_vrerdnosti[trenutna_izbira] != undefined) {
+            while (operatorji != "" && operatorji.slice(-1) != '(' && operatorji_po_vrerdnosti[trenutna_izbira] <= operatorji_po_vrerdnosti[operatorji.slice(-1)]) {
+                izhodni += " " + operatorji.slice(-1);
+                operatorji = operatorji.slice(0, -1);
+            }
+            operatorji += " " + trenutna_izbira;
+            prejStevilo = false;
+            prejOperator = true;
+        } else {
+            prejStevilo = false;
+        }
+
+        stevec += 1;
+    }
+
+    while (operatorji != "") {
+        izhodni += " " + operatorji.slice(-1);
+        operatorji = operatorji.slice(0, -1);
+    }
+
+    izhodni = izhodni.trim().split(/\s+/); 
+
+    var zacasni_list =[];
+    var st=0;
+    var st_za_for =0;
+    var izracun=0;
+    var samo_ena = false;
+    if(izhodni.length ==1){
+        samo_ena = true;
+    }
+
+    while (izhodni.length != 1){
+        samo_ena = false;
+        while(isNaN(izhodni[st]) == false){
+            st +=1;
+        }
+
+        stevilo1 = izhodni[st-2];
+        stevilo2 = izhodni[st-1];
+        operator = izhodni[st];
+
+        if(operator == "+"){
+            izracun = +(stevilo1) + +(stevilo2);
+        }else if(operator =="-"){
+            izracun = +(stevilo1) - +(stevilo2);
+        }else if(operator == "*"){
+            izracun = +(stevilo1) * +(stevilo2);
+        }else if(operator =="/"){
+            izracun = +(stevilo1) / +(stevilo2);
+        }else if(operator == "%"){
+            izracun = +(stevilo1) % +(stevilo2);
+        }
+
+        st_za_for = 0;
+        for(let i = 0; i<izhodni.length;i++){
+            if((st-1) != i && (st-2) != i && st !=i){
+                zacasni_list[st_za_for] = izhodni[i];
+                st_za_for+=1;
+            }
+            if(st == i){
+                zacasni_list[st_za_for] = izracun;
+                st_za_for +=1;
+                izracun = 0;
+            }
+        }
+        izhodni = [];
+        izhodni = zacasni_list;
+        zacasni_list = []
+        st=0;
+    }
+    if(Number.isInteger(+(izhodni[0]))== true){
+        return izhodni[0];
+
+    }else{
+        return (+(izhodni[0])).toFixed(2);
+
+    }
+}
+
+
+function Izracunaj(racun,IzDatoteke) {
+    if (IzDatoteke == false){
+        var racun = document.getElementById("vnos").value;
+    }
+
+    racun = racun.replace(/sqrt\s*\(\s*(.*?)\s*\)/g, (_, vsebina) => {
+        let test = NamestoEval(vsebina)
+        racun = Math.sqrt(+(test))
+        recun = racun.toFixed(2)
+        return recun;
+      });
+    racun = racun.replace(/pow\s*\(\s*(.*?)\s*,\s*(.*?)\s*\)/g, (_, baza, eksponent) => Math.pow(+(baza), +(eksponent)));
+  
+    if(IzDatoteke == false){
+        document.getElementById("vnos").value = NamestoEval(racun);
+    }else{
+        return NamestoEval(racun);
+    }
+}
+
 //PRETVORBENI KALKUALTOR
 function Rezultat(BeremIzDatoteke,IzSistema,VnosStevila,VSistem) {
 
@@ -23,15 +176,13 @@ function Rezultat(BeremIzDatoteke,IzSistema,VnosStevila,VSistem) {
         return Stevilo_v_sistem;
     }else{
         var KamVpisem = document.getElementById("KamIzpis").value;
-        if(KamVpisem == "vnos_stevila2" || KamVpisem == "vnos_stevila3"){
-            if(VSistem == "BIN"){
-                document.getElementById(KamVpisem).value = Stevilo_v_sistem;
-            }
+        if(KamVpisem == "vnos_stevila2"){
+            logicna_trenutniSistem2 = VSistem;
         }
-        else{
-            document.getElementById(KamVpisem).value = Stevilo_v_sistem;
+        else if(KamVpisem == "vnos_stevila3"){
+            logicna_trenutniSistem3 = VSistem;
         }
-        
+        document.getElementById(KamVpisem).value = Stevilo_v_sistem;
     }
 }
 
@@ -227,6 +378,99 @@ function DEC(VSistem,VnosStevila){
     return Stevilo_v_sistem;
 }
 
+//LOGIČNA VRATA
+logicna_trenutniSistem2 = "";
+logicna_trenutniSistem3 = "";
+
+
+function racBit(prvo, operator, drugo = 0){
+    let result = "";
+    if(operator == "AND"){
+        result += (prvo & drugo);
+        return result;
+    }
+    else if(operator == "OR"){
+        result += (prvo | drugo);
+        return result;
+    }
+    else if(operator == "XOR"){
+        result += (prvo ^ drugo);
+        return result;
+    }
+    else if(operator == "NOT"){
+        len = prvo.length;
+        for(let i = 0; i < len; i++){
+            if(prvo[i] == 1){
+                result += "0";
+            }
+            else if(prvo[i] == 0){
+                result += "1";
+            }
+        }
+        result = IzBINvDEC(result);
+        return result;
+    }
+}
+
+function decConversion(stevilo, sistem){ // sistem je število 2, 8 ali 16, kar predstavlja v kateri sistem se pretvori
+    let result = "";
+    
+    while(stevilo > 0){
+        result = (stevilo % sistem) + result;
+        stevilo = Math.floor(stevilo/sistem);
+    }
+    return result;
+}
+
+function izrazLogicna(){
+    var levoStevilo = document.getElementById("vnos_stevila2").value;
+    var logicniOperator = document.getElementById("Logicni").value;
+    var desnoStevilo = document.getElementById("vnos_stevila3").value;
+    var result = "";
+    //Pretvorba v binarno
+    if(logicna_trenutniSistem2 == "DEC"){
+        levoStevilo = IzDECvBIN(levoStevilo);
+    }
+    else if(logicna_trenutniSistem2 == "OCT"){
+        levoStevilo = IzOCTvBIN(levoStevilo);
+    }
+    else if(logicna_trenutniSistem2 == "HEX"){
+        levoStevilo = IzHEXvBIN(levoStevilo);
+    }
+    
+    if(logicna_trenutniSistem3 == "DEC"){
+        desnoStevilo = IzDECvBIN(desnoStevilo);
+    }
+    else if(logicna_trenutniSistem3 == "OCT"){
+        desnoStevilo = IzOCTvBIN(desnoStevilo);
+    }
+    else if(logicna_trenutniSistem3 == "HEX"){
+        desnoStevilo = IzHEXvBIN(desnoStevilo);
+    }
+    
+    //Obravnava
+    if(logicniOperator != "NOT"){
+        levoStevilo = "0b" + levoStevilo;
+        desnoStevilo = "0b" + desnoStevilo;
+    }
+    
+    result = racBit(levoStevilo, logicniOperator, desnoStevilo);
+    //Pretvorba nazaj v originalni sistem
+    if(logicna_trenutniSistem2 == "BIN"){
+        result = decConversion(result, 2);
+    }
+    else if(logicna_trenutniSistem2 == "OCT"){
+        result = decConversion(result, 8);
+    }
+    else if(logicna_trenutniSistem2 == "HEX"){
+        result = decConversion(result, 16);
+    }
+    //Izpis
+    logicna_trenutniSistem3 = "";
+    document.getElementById("vnos_stevila2").value = result;
+    document.getElementById("vnos_stevila3").value = "";
+}
+
 //BRANJE DATOTEK ZA PRETVORBE
 function BranjeDatotekeStSistemov() {
     var fileInput = document.getElementById('FileStSistemi');
@@ -262,160 +506,6 @@ function LineToResult(line){
     let VnosStevila = list[1];
     let VSistem = list[2];
     return Rezultat(true,IzSistema,VnosStevila,VSistem);
-}
-
-
-
-//OSNOVNI KALKLATOR
-function DodamVDisplay(vnos){
-    document.getElementById("vnos").value += vnos;
-}
-
-function Izbrisi(){
-    document.getElementById("vnos").value = "";
-}
-
-function IzbrisiEno(){
-    let vnos = document.getElementById("vnos").value;
-    document.getElementById("vnos").value = vnos.slice(0, -1);
-}
-
-//Shunting Yard algoritem
-function NamestoEval(racun) {
-    racun +="="
-    var izhodni = "";
-    var operatorji = "";
-    var stevec = 0;
-    var prejStevilo = false;
-    var prejOperator = true;
-    const operatorji_po_vrerdnosti = {
-        '+': 1,
-        '-': 1,
-        '*': 2,
-        '/': 2,
-        '%': 2
-    };
-
-    while (racun[stevec] != "=") {
-        var trenutna_izbira = racun[stevec];
-
-        if (!isNaN(trenutna_izbira) || trenutna_izbira == '.' || (trenutna_izbira == '-' && prejStevilo == false && prejOperator == true)) {
-            if (prejStevilo) {
-                izhodni += trenutna_izbira;
-            } else {
-                izhodni += " " + trenutna_izbira;
-            }
-            prejStevilo = true;    
-        } else if (trenutna_izbira == '(') {
-            operatorji += trenutna_izbira;
-            prejOperator = true
-            prejStevilo = false;
-        } else if (trenutna_izbira == ')') {
-            while (operatorji.slice(-1) !== '(') {
-                izhodni += " " + operatorji.slice(-1);
-                operatorji = operatorji.slice(0, -1);
-            }
-            operatorji = operatorji.slice(0, -1);
-            prejStevilo = false;
-            prejOperator = true;
-        } else if (operatorji_po_vrerdnosti[trenutna_izbira] != undefined) {
-            while (operatorji != "" && operatorji.slice(-1) != '(' && operatorji_po_vrerdnosti[trenutna_izbira] <= operatorji_po_vrerdnosti[operatorji.slice(-1)]) {
-                izhodni += " " + operatorji.slice(-1);
-                operatorji = operatorji.slice(0, -1);
-            }
-            operatorji += " " + trenutna_izbira;
-            prejStevilo = false;
-            prejOperator = true;
-        } else {
-            prejStevilo = false;
-        }
-
-        stevec += 1;
-    }
-
-    while (operatorji != "") {
-        izhodni += " " + operatorji.slice(-1);
-        operatorji = operatorji.slice(0, -1);
-    }
-
-    izhodni = izhodni.trim().split(/\s+/); 
-
-    var zacasni_list =[];
-    var st=0;
-    var st_za_for =0;
-    var izracun=0;
-    var samo_ena = false;
-    if(izhodni.length ==1){
-        samo_ena = true;
-    }
-
-    while (izhodni.length != 1){
-        samo_ena = false;
-        while(isNaN(izhodni[st]) == false){
-            st +=1;
-        }
-
-        stevilo1 = izhodni[st-2];
-        stevilo2 = izhodni[st-1];
-        operator = izhodni[st];
-
-        if(operator == "+"){
-            izracun = +(stevilo1) + +(stevilo2);
-        }else if(operator =="-"){
-            izracun = +(stevilo1) - +(stevilo2);
-        }else if(operator == "*"){
-            izracun = +(stevilo1) * +(stevilo2);
-        }else if(operator =="/"){
-            izracun = +(stevilo1) / +(stevilo2);
-        }else if(operator == "%"){
-            izracun = +(stevilo1) % +(stevilo2);
-        }
-
-        st_za_for = 0;
-        for(let i = 0; i<izhodni.length;i++){
-            if((st-1) != i && (st-2) != i && st !=i){
-                zacasni_list[st_za_for] = izhodni[i];
-                st_za_for+=1;
-            }
-            if(st == i){
-                zacasni_list[st_za_for] = izracun;
-                st_za_for +=1;
-                izracun = 0;
-            }
-        }
-        izhodni = [];
-        izhodni = zacasni_list;
-        zacasni_list = []
-        st=0;
-    }
-    if(Number.isInteger(+(izhodni[0]))== true){
-        return izhodni[0];
-
-    }else{
-        return (+(izhodni[0])).toFixed(2);
-
-    }
-}
-
-
-function Izracunaj(racun,IzDatoteke) {
-    if (IzDatoteke == false){
-        var racun = document.getElementById("vnos").value;
-    }
-
-    racun = racun.replace(/sqrt\s*\(\s*(.*?)\s*\)/g, (_, vsebina) => {
-        let test = NamestoEval(vsebina)
-        racun = Math.sqrt(+(test))
-        recun = racun.toFixed(2)
-        return recun;
-      });
-    racun = racun.replace(/pow\s*\(\s*(.*?)\s*,\s*(.*?)\s*\)/g, (_, baza, eksponent) => Math.pow(+(baza), +(eksponent)));
-  
-    if(IzDatoteke == false){
-        document.getElementById("vnos").value = NamestoEval(racun);
-    }else{
-        return NamestoEval(racun);
-    }
 }
 
 function BranjeDatotekeOsnovniCalc(){
